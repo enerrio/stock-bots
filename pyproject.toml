@@ -1,0 +1,21 @@
+[project]
+name = "stock-bot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "atproto>=0.0.59",
+    "python-dotenv>=1.1.0",
+    "yfinance>=0.2.55",
+]
+
+[dependency-groups]
+dev = [
+    "ipython>=9.1.0",
+    "pre-commit>=4.2.0",
+    "ruff>=0.11.4",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
