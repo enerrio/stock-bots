@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "atproto>=0.0.59",
     "python-dotenv>=1.1.0",
+    "whenever>=0.7.3",
     "yfinance>=0.2.55",
 ]
 
@@ -14,8 +15,24 @@ dependencies = [
 dev = [
     "ipython>=9.1.0",
     "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
     "ruff>=0.11.4",
 ]
 
-[tool.ruff.lint.pydocstyle]
-convention = "google"
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I"
+]
+ignore = ["E501"]
