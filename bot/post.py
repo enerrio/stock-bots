@@ -4,9 +4,9 @@ from typing import Any
 
 from atproto import Client, models
 from atproto.exceptions import AtProtocolError
-from fetch_data import get_ticker_data
 from whenever import Instant
 
+from bot.fetch_data import get_ticker_data
 from config.settings import BLUESKY_HANDLE, BLUESKY_PASSWORD, DEBUG, INDEX_SYMBOLS
 
 logger = logging.getLogger(__name__)
