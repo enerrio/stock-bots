@@ -12,3 +12,7 @@ wheels/
 # Misc
 .env
 .coverage
+Notes.md
+*.zip
+packages
+requirements.txt
