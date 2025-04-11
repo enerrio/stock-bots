@@ -11,3 +11,6 @@ format:
 
 test:
 	$(PYTEST) --cov=. --cov-report=term
+
+package:
+	./scripts/package.sh
