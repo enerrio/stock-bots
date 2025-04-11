@@ -10,7 +10,7 @@ format:
 	$(RUFF) format .
 
 test:
-	$(PYTEST) --cov=. --cov-report=term
+	$(PYTEST) tests/ --cov=. --cov-report=term
 
 package:
 	./scripts/package.sh
