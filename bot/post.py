@@ -88,15 +88,18 @@ def run() -> bool:
         else:
             message += f"⚪ {ticker} - Data N/A\n"
 
-    if not DEBUG:
-        response = client.post(message)
-        if response:
-            logging.info("Post successful. Response: %s", response)
-        else:
-            logging.error("Failed to post update.")
-            return False
-    logging.info("Debug mode is enabled. No post will be made.")
-    return True
+    logger.info("Message to post:\n%s", message)
+
+    if DEBUG:
+        logging.info("Debug mode is enabled. No post will be made.")
+        return True
+    response = client.post(message)
+    if response:
+        logging.info("Post successful. Response: %s", response)
+        return True
+    else:
+        logging.error("Failed to post update.")
+        return False
 
 
 def lambda_handler(event, context) -> dict[str, Any]:
