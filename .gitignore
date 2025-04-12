@@ -10,7 +10,7 @@ wheels/
 .venv
 
 # Misc
-.env
+*.env
 .coverage
 Notes.md
 *.zip
