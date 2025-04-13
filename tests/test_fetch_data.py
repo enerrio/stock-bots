@@ -1,6 +1,6 @@
 import yfinance as yf
 
-from bot.fetch_data import get_ticker_data
+from bot.common.fetch_data import get_ticker_data
 
 
 # Dummy classes to simulate yfinance ticker behavior
@@ -30,13 +30,13 @@ def test_get_ticker_data(monkeypatch):
     test_symbols = ["TEST1", "TEST2"]
 
     # Override INDEX_SYMBOLS in bot.fetch_data with the test symbols
-    monkeypatch.setattr("bot.fetch_data.INDEX_SYMBOLS", test_symbols)
+    # monkeypatch.setattr("bot.common.fetch_data.INDEX_SYMBOLS", test_symbols)
 
     # Monkeypatch yfinance.Tickers to return our dummy data
     monkeypatch.setattr(yf, "Tickers", lambda symbols: DummyTickers(symbols))
 
     # Call the function under test
-    ticker_data = get_ticker_data()
+    ticker_data = get_ticker_data(test_symbols)
 
     # Assert that the returned data is structured correctly
     assert isinstance(ticker_data, dict)

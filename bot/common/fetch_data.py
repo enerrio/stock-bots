@@ -1,19 +1,26 @@
+import logging
+
 import yfinance as yf
 
-from config.settings import INDEX_SYMBOLS
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
-def get_ticker_data() -> dict[str, dict[str, float]]:
+def get_ticker_data(index_symbols: list[str]) -> dict[str, dict[str, float]]:
     """Get ticker data from Yahoo Finance.
 
-    Fetches current market data for tickers defined in INDEX_SYMBOLS, including
+    Fetches current market data for tickers defined in index_symbols, including
     previous close price, open price, current market price, percentage change,
     and absolute change.
+
+    Args:
+        index_symbols (list[str]): List of ticker symbols to fetch data for.
 
     Returns:
         dict[str, dict[str, float]]: Ticker mapping symbols to dictionaries of market data.
     """
-    tickers = yf.Tickers(INDEX_SYMBOLS)
+    tickers = yf.Tickers(index_symbols)
     ticker_info = {
         ticker: {
             "previousClose": tickers.tickers[ticker].info["previousClose"],
@@ -24,6 +31,6 @@ def get_ticker_data() -> dict[str, dict[str, float]]:
             ],
             "regularMarketChange": tickers.tickers[ticker].info["regularMarketChange"],
         }
-        for ticker in INDEX_SYMBOLS
+        for ticker in index_symbols
     }
     return ticker_info

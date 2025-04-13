@@ -2,57 +2,18 @@ import json
 import logging
 from typing import Any
 
-from atproto import Client, models
-from atproto.exceptions import AtProtocolError
 from whenever import Instant
 
-from bot.fetch_data import get_ticker_data
-from config.settings import BLUESKY_HANDLE, BLUESKY_PASSWORD, DEBUG, INDEX_SYMBOLS
+from bot.common.client import BlueskyClient
+from bot.common.fetch_data import get_ticker_data
+from config.domestic.settings import (
+    BLUESKY_HANDLE,
+    BLUESKY_PASSWORD,
+    DEBUG,
+    INDEX_SYMBOLS,
+)
 
 logger = logging.getLogger(__name__)
-
-
-class BlueskyClient:
-    """Bluesky client to handle logging in and posting."""
-
-    def __init__(self) -> None:
-        self.client = Client(base_url="https://bsky.social")
-
-    def login(
-        self, username: str, password: str
-    ) -> models.AppBskyActorDefs.ProfileViewDetailed:
-        """Login to Bluesky using username and password.
-
-        Args:
-            username (str): Bluesky username.
-            password (str): Bluesky password.
-
-        Returns:
-            models.AppBskyActorDefs.ProfileViewDetailed: Bluesky session object.
-            None: If login fails.
-        """
-        try:
-            session = self.client.login(username, password)
-            return session
-        except AtProtocolError as err:
-            logging.error("Bluesky login error: %s", err)
-            return None
-
-    def post(self, text: str) -> models.AppBskyFeedPost.CreateRecordResponse:
-        """Post to Bluesky.
-
-        Args:
-            text (str): Content of the post.
-
-        Returns:
-            models.AppBskyFeedPost.CreateRecordResponse: Post response object.
-        """
-        try:
-            post = self.client.send_post(text)
-            return post
-        except AtProtocolError as err:
-            logging.error("Bluesky post error: %s", err)
-            return None
 
 
 def run() -> bool:
@@ -71,7 +32,7 @@ def run() -> bool:
 
     # Get ticker data from the fetch_data script
     logger.info("Fetching ticker data")
-    ticker_data = get_ticker_data()
+    ticker_data = get_ticker_data(INDEX_SYMBOLS)
     current_time = Instant.now().to_tz("America/New_York").py_datetime()
     current_time_str = current_time.strftime("%I:%M %p ET").lstrip("0")
 

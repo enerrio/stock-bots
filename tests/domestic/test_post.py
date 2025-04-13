@@ -1,31 +1,17 @@
 import datetime
 
-from bot import post
+from bot.domestic import post
 
 
-def dummy_get_ticker_data():
+def dummy_get_ticker_data(ticker_symbols: list[str]) -> dict[str, dict[str, float]]:
     # Return dummy ticker data similar to what yf.Tickers would return
     return {
-        "SPY": {
+        symbol: {
             "regularMarketPrice": 105.25,
             "previousClose": 104.50,
             "regularMarketChangePercent": 0.72,
-        },
-        "QQQ": {
-            "regularMarketPrice": 210.50,
-            "previousClose": 211.00,
-            "regularMarketChangePercent": -0.24,
-        },
-        "DIA": {
-            "regularMarketPrice": 330.00,
-            "previousClose": 329.50,
-            "regularMarketChangePercent": 0.15,
-        },
-        "IWM": {
-            "regularMarketPrice": 190.75,
-            "previousClose": 190.50,
-            "regularMarketChangePercent": 0.13,
-        },
+        }
+        for symbol in ticker_symbols
     }
 
 
