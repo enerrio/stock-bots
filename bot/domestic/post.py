@@ -45,7 +45,7 @@ def run() -> bool:
 
         if price is not None and previous is not None and change_percent is not None:
             emoji = "🟢" if price > previous else "🔴"
-            message += f"{emoji} {ticker} - ${price:.2f} ({change_percent:+.2f}%)\n"
+            message += f"{emoji} {ticker} - ${price:,.2f} ({change_percent:+.2f}%)\n"
         else:
             message += f"⚪ {ticker} - Data N/A\n"
 
