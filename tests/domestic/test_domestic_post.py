@@ -85,8 +85,8 @@ def test_run_production_failure(monkeypatch):
     # Override get_ticker_data to return dummy data
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
     # Override Instant to return a fixed datetime
-    monkeyatch = monkeypatch.setattr  # alias for brevity
-    monkeyatch(post, "Instant", DummyInstant)
+    monkeypatch = monkeypatch.setattr  # alias for brevity
+    monkeypatch(post, "Instant", DummyInstant)
     # Simulate successful login
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"

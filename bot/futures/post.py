@@ -20,12 +20,14 @@ def should_execute() -> bool:
     """Check if the futures market is open. For futures, trading is open from Sunday 5pm CT to Friday 4pm CT.
 
     Returns:
-        bool: True if the current invocation is during trading hours, False if before Sunday market open.
+        bool: True if the current invocation is during trading hours, False if before Sunday market open or if day is Saturday.
     """
     # Use Central Time (America/Chicago) for checking futures market hours
     current_time = Instant.now().to_tz("America/Chicago").py_datetime()
     weekday, hour = current_time.weekday(), current_time.hour
-    return not (weekday == 6 and hour < 17) or (weekday == 4 and hour >= 16)
+    return not (
+        weekday == 5 or (weekday == 6 and hour < 17) or (weekday == 4 and hour >= 16)
+    )
 
 
 def run() -> bool:
@@ -63,9 +65,9 @@ def run() -> bool:
 
         if price is not None and previous is not None and change_percent is not None:
             emoji = "🟢" if price > previous else "🔴"
-            message += f"{emoji} {ticker} - {price:,.2f} ({change_percent:.2f}%)\n"
+            message += f"{emoji} {ticker} - {price:,.2f} ({change_percent:+.2f}%)\n"
         else:
-            message = f"⚪ {ticker} - Data N/A\n"
+            message += f"⚪ {ticker} - Data N/A\n"
 
     logger.info("Message to post:\n%s", message)
 
