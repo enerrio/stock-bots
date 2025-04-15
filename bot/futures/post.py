@@ -15,6 +15,7 @@ from config.futures.settings import (
 )
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def should_execute() -> bool:

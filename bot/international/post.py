@@ -13,6 +13,7 @@ from config.international.settings import (
 )
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def run() -> bool:
