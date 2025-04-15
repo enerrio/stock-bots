@@ -17,3 +17,5 @@ Notes.md
 packages
 requirements.txt
 *.txt
+package*
+out
