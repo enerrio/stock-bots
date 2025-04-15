@@ -31,6 +31,7 @@ for BOT in "${BOTS[@]}"; do
     # Copy common bot code
     mkdir -p "${TMP_DIR}/bot"
     cp -r bot/common "${TMP_DIR}/bot/"
+    cp -r bot/__init__.py "${TMP_DIR}/bot/"
 
     echo "Adding ${BOT} specific code..."
     cp -r "bot/${BOT}" "${TMP_DIR}/bot/"
