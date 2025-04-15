@@ -1,10 +1,4 @@
-import logging
-
 import yfinance as yf
-
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
 
 
 def get_ticker_data(index_symbols: list[str]) -> dict[str, dict[str, float]]:

@@ -6,6 +6,7 @@ from whenever import Instant
 
 from bot.common.client import BlueskyClient
 from bot.common.fetch_data import get_ticker_data
+from bot.common.message import build_market_update_message
 from config.futures.settings import (
     BLUESKY_HANDLE,
     BLUESKY_PASSWORD,
@@ -53,22 +54,7 @@ def run() -> bool:
     # Get ticker data from the fetch_data script
     logger.info("Fetching ticker data")
     ticker_data = get_ticker_data(INDEX_SYMBOLS)
-    current_time = Instant.now().to_tz("America/New_York").py_datetime()
-    current_time_str = current_time.strftime("%I:%M %p ET").lstrip("0")
-
-    message = f"🕰️ Market Update - {current_time_str}\n\n"
-    for ticker in INDEX_SYMBOLS:
-        data = ticker_data[ticker]
-        price = data.get("regularMarketPrice")
-        previous = data.get("previousClose")
-        change_percent = data.get("regularMarketChangePercent")
-
-        if price is not None and previous is not None and change_percent is not None:
-            emoji = "🟢" if price > previous else "🔴"
-            message += f"{emoji} {ticker} - {price:,.2f} ({change_percent:+.2f}%)\n"
-        else:
-            message += f"⚪ {ticker} - Data N/A\n"
-
+    message = build_market_update_message(ticker_data, prefix="")
     logger.info("Message to post:\n%s", message)
 
     if DEBUG:
