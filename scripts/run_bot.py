@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 import sys
 
@@ -18,6 +19,9 @@ def load_and_run_market(market: str) -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     parser = argparse.ArgumentParser(description="Run the bot.")
     parser.add_argument("--market", choices=["domestic", "international", "futures"])
     args = parser.parse_args()
