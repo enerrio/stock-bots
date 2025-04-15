@@ -35,8 +35,6 @@ def test_run_debug(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", True)
     # Override get_ticker_data to return dummy data
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
-    # Override Instant to return a fixed datetime
-    monkeypatch.setattr(post, "Instant", DummyInstant)
     # Patch login to simulate a successful login
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"
@@ -65,8 +63,6 @@ def test_run_production_success(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", False)
     # Override get_ticker_data to return dummy data
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
-    # Override Instant to return a fixed datetime
-    monkeypatch.setattr(post, "Instant", DummyInstant)
     # Simulate successful login
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"
@@ -84,9 +80,6 @@ def test_run_production_failure(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", False)
     # Override get_ticker_data to return dummy data
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
-    # Override Instant to return a fixed datetime
-    monkeypatch = monkeypatch.setattr  # alias for brevity
-    monkeypatch(post, "Instant", DummyInstant)
     # Simulate successful login
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"

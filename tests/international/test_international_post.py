@@ -33,7 +33,6 @@ class DummyInstant:
 def test_run_debug(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", True)
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
-    monkeypatch.setattr(post, "Instant", DummyInstant)
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"
     )
@@ -55,7 +54,6 @@ def test_run_login_failure(monkeypatch):
 def test_run_production_success(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", False)
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
-    monkeypatch.setattr(post, "Instant", DummyInstant)
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"
     )
@@ -68,7 +66,6 @@ def test_run_production_success(monkeypatch):
 def test_run_production_failure(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", False)
     monkeypatch.setattr(post, "get_ticker_data", dummy_get_ticker_data)
-    monkeypatch.setattr(post, "Instant", DummyInstant)
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: "fake_session"
     )
