@@ -79,7 +79,7 @@ Below is a description of the folders and files in this repo.
 * tests/: Unit tests
 
 ## Secrets
-Not included in this repo are `.env` files that contains the login credentials for each bot's Bluesky accounts and a flag for debugging. Since we're already using AWS we could store these credentials in something more secure like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) but that's overkill for a small project like this.
+There are a few expected environment variables that can be placed in `.env` files including the login credentials for each bot's Bluesky accounts and a flag for debugging. Since we're already using AWS we could store these credentials in something more secure like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) but that's overkill for a small project like this.
 
 ## Deployment
 This bot is deployed to AWS Lambda and is triggered by an EventBridge rule scheduled to execute every hour during market hours (excluding holidays). Here are (roughly) the commands that are run in order to prepare the code for deployment. Since there are three separate bots, the commands are a little different for each one. See the `package.sh` file for a more complete example of how to package the files together.
