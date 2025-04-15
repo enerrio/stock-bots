@@ -15,13 +15,44 @@ uv pip install \
     --target packages \
     -r requirements.txt
 
-echo "Packaging dependencies..."
-rm -rf package.zip
-cd packages
-zip -r ../package.zip .
-cd ..
+# Define array of market bots
+BOTS=("domestic" "international" "futures")
 
-echo "Packaging application code..."
-zip -r package.zip bot config .env
+for BOT in "${BOTS[@]}"; do
+    TMP_DIR="package_${BOT}"
+    ZIPFILE="package_${BOT}.zip"
+    rm -rf "${TMP_DIR}"
+    mkdir -p "${TMP_DIR}"
 
-echo "Package created: package.zip"
+    echo "Copying common dependencies to ${TMP_DIR}..."
+    cp -r packages/* "${TMP_DIR}/"
+
+    echo "Adding shared code..."
+    # Copy common bot code
+    mkdir -p "${TMP_DIR}/bot"
+    cp -r bot/common "${TMP_DIR}/bot/"
+
+    echo "Adding ${BOT} specific code..."
+    cp -r "bot/${BOT}" "${TMP_DIR}/bot/"
+
+    if [ -d "config/${BOT}" ]; then
+        echo "Adding config for ${BOT}..."
+        mkdir -p "${TMP_DIR}/config"
+        cp -r "config/${BOT}" "${TMP_DIR}/config/"
+    fi
+
+    if [ -f ".env.${BOT}" ]; then
+        echo "Adding .env file for ${BOT}..."
+        cp ".env.${BOT}" "${TMP_DIR}/"
+    fi
+
+    echo "Creating zip package ${ZIPFILE}..."
+    (cd "${TMP_DIR}" && zip -r "../${ZIPFILE}" .)
+    rm -rf "${TMP_DIR}"
+    echo "Package created: ${ZIPFILE}"
+
+done
+
+rm -rf packages
+
+echo "All packages created successfully."
