@@ -57,6 +57,7 @@ def test_run_debug(monkeypatch):
 # Test when login fails: run() should return False immediately.
 def test_run_login_failure(monkeypatch):
     monkeypatch.setattr(post, "DEBUG", True)
+    monkeypatch.setattr(post, "Instant", DummyInstantOpen)
     monkeypatch.setattr(
         post.BlueskyClient, "login", lambda self, username, password: None
     )
